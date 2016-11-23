@@ -8,11 +8,12 @@ def open(url):
     assert '展酷' in title
 
 def open_links(links, error_links):
-    try:
-        for link in links:
-            open(link)
-    except Exception:
-        error_links.append(link)
-    if len(error_links) != 0:
-        print(error_links)
-        assert False
+    if links:
+        try:
+            for link in links:
+                open(link)
+        except Exception:
+            error_links.append(link)
+        if len(error_links) != 0:
+            print(error_links)
+            assert False

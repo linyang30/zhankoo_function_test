@@ -1,7 +1,7 @@
 import unittest
 from bs4 import BeautifulSoup
 import requests
-from test_case.models.open_page import open, open_links
+from models.open_page import open, open_links
 import json
 import re
 
@@ -135,9 +135,10 @@ class SearchResult(unittest.TestCase):
             for item in json.loads(res)['res']:
                 txzhanshang_ids.append(item['ID'])
             for id in txzhanshang_ids:
-                txzhanshang_ids.append('http://txzhanshang.zhankoo.com/detail/%s.html' % id)
+                txzhanshang_links.append('http://txzhanshang.zhankoo.com/detail/%s.html' % id)
             open_links(txzhanshang_links, error_links)
 
 
-
+if __name__ == '__main__':
+    unittest.main()
 
