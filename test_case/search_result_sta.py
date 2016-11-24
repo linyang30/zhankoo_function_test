@@ -124,7 +124,6 @@ class SearchResult(unittest.TestCase):
         datas = [data1, data2, data3, data4, data5]
         for data in datas:
             txzhanshang_ids = []
-            txzhanshang_links = []
             error_links = []
             web_response = requests.post(self.txzhanshang_data_url, data=data)
             dr = re.compile(r'<[^>]+>|\\r\\n', re.S)
@@ -134,9 +133,7 @@ class SearchResult(unittest.TestCase):
             res = '{"res":' + json.loads(dd)['archiles'] + "}"
             for item in json.loads(res)['res']:
                 txzhanshang_ids.append(item['ID'])
-            for id in txzhanshang_ids:
-                txzhanshang_links.append('http://txzhanshang.zhankoo.com/detail/%s.html' % id)
-            open_links(txzhanshang_links, error_links)
+            open_links(['http://txzhanshang.zhankoo.com/detail/{}.html'.format(i) for i in txzhanshang_ids], error_links)
 
 
 if __name__ == '__main__':
