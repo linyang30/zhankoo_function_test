@@ -5,7 +5,7 @@ from models.open_page import open, open_links
 import json
 import re
 
-class SearchResult(unittest.TestCase):
+class DataTest(unittest.TestCase):
 
     zhanhui_search_result_url = 'http://exh.zhankoo.com/Exhibition/Partial/_SearchExhibitionFindPage?pageIndex=1&pageSize=1000'
     zhanzhuang_search_result_url = 'http://exh.zhankoo.com/Decorate/Partial/_DecorateSearchPage?pageIndex=1&pageSize=1000'

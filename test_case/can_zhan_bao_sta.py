@@ -1,6 +1,6 @@
 import unittest
-from test_case.models.can_zhan_bao import CanZhanBao
-from test_case.models.back import Back
+from models.can_zhan_bao import CanZhanBao
+from models.back import Back
 
 
 booking_zhanwei_insert_url = 'http://exh.zhankoo.com/Home/BoothBookInsert'

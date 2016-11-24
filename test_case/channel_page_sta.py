@@ -1,4 +1,4 @@
-from test_case.models.open_page import open, open_links
+from models.open_page import open, open_links
 import unittest
 
 class ChannelPage(unittest.TestCase):
