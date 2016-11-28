@@ -53,9 +53,9 @@ class CanzhanbaoTest(unittest.TestCase):
             'url': booking_zhanwei_supplement_url
         }
         self.can_zhan_bao.booking_supplement(booking_supplement_param)
-        res = self.back.find_lastest_requirement(is_zhanwei=True)
+        res = self.back.find_lastest(1)
         assert id == res
-        self.back.del_requirement(id, is_zhanwei=True)
+        self.back.del_item(id, 1)
 
     def test_booking_zhanzhuang(self):
         '''提交展装需求'''
@@ -80,9 +80,9 @@ class CanzhanbaoTest(unittest.TestCase):
             'url': booking_zhanzhuang_supplement_url
         }
         self.can_zhan_bao.booking_supplement(booking_supplement_param)
-        res = self.back.find_lastest_requirement(is_zhanwei=False)
+        res = self.back.find_lastest(2)
         assert id == res
-        self.back.del_requirement(id, is_zhanwei=False)
+        self.back.del_item(id, 2)
 
 
 

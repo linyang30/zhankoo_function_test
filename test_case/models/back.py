@@ -1,40 +1,56 @@
 import requests
 import json
+from models.get_session import get_back_session
 
 class Back:
 
     back_zhanwei_requirement_url = 'http://back.zhankoo.com/Exhibition/Booth/BoothBookFindPaged'
     back_del_zhanwei_requirement_url = 'http://back.zhankoo.com/Exhibition/Booth/BoothBookDelete'
     back_zhanzhuang_requirement_url = 'http://back.zhankoo.com/Exhibition/Decorate/DecorateBookFindPaged'
+    back_zhanhui_url = 'http://back.zhankoo.com/Exhibition/Exhibition/ExhibitionFindPaged'
     back_del_zhanzhuang_requirement_url = 'http://back.zhankoo.com/Exhibition/Decorate/DecorateBookDelete'
+    back_del_zhanhui_url = 'http://back.zhankoo.com/Exhibition/Exhibition/ExhibitionDelete'
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.22 Safari/537.36 SE 2.X MetaSr 1.0',
-        'Cookie': 'pgv_pvi=5899286528; Hm_lvt_eb7b96a72f37b30dd098bacbb7e63b84=1477290116,1477626020,1478141069; Hm_lvt_c9f4a5eab06364796310e6b7a7033ba8=1477290115,1477626020,1478141069; ASP.NET_SessionId=sxaqaqbjbiuz3qoc3pduau0n; .ApplicationCookie=DB10DA4092558E126CDE47BCFF7D907EF90D4867D1A0AFE686EDC7E40CB90BFAB7ADAAD879A922AC64669836A131F318CA02F93148F25A8F24E369CB1B17E6B6450450F31BE17A3D9059278A1369F351ED0686459264A270A930AD0EA32EDA3A86642F7BEE4B2ED7009EA39D88D96D2D16C78E48F638AF393E3E2CEDAFC4CE4847B39D23ED33B080F3133C8AE3B45FE20179A7C966600BC9FFB0E45B739373A6B2CFD59E033979A857CE3390200675DA3E3DD7547B5BB4668A25FF7E5CC9B1EBF7FEE95D4985FCBEFDA5136C753C1CCAA14EA429'
+        'Cookie': 'pgv_pvi=5899286528; Hm_lvt_eb7b96a72f37b30dd098bacbb7e63b84=1477626020,1478141069,1479972174,1480040467; Hm_lvt_c9f4a5eab06364796310e6b7a7033ba8=1477626020,1478141069,1479972174,1480040467; ASP.NET_SessionId=kh0ufne3hepzhfab4yvqrabq; .ApplicationCookie=36F53D4975163D6F896A00EBBCE727833D2D16BF6DA2A7923270E01B2CB8BF61C27ADC54A9554897D6DF4C2A853C26C65B6A2D0F265B6AD595BFE5E5BE25245FB8B679A73751CEDFE5D11B3EF6699800B382CCCE7F4B1D4E74B7972FC3A72210379A1D05666C4CA5BE775526109D7057E1FD5C64C069D20710C3B0EB20F84D41799092CCC86C6F59AF952310AA6BD16C5C406E1E9B62757E843571B30A552A1F6D578D5683DC5C538BA392297C63DFFD9E836425A7F8075AA0A46559728AA5A3009E918BB399163A61F208D9F4CB09B06F543A5A'
     }
 
-    def find_lastest_requirement(self, is_zhanwei):
+    '''
+    1: 展位需求
+    2：展装需求
+    3：展会
+    '''
+    session = get_back_session()
+
+    def find_lastest(self, code):
         data = {
             'page': 1,
             'rows': 1,
             'sort': 'CreateOn',
             'order': 'DESC'
         }
-        if is_zhanwei:
+        if code == 1:
             url = self.back_zhanwei_requirement_url
-        else:
+        elif code == 2:
             url = self.back_zhanzhuang_requirement_url
-        web_response_back = requests.post(url, headers=self.headers, data=data)
+        elif code == 3:
+            url = self.back_zhanhui_url
+        # web_response_back = requests.post(url, headers=self.headers, data=data)
+        web_response_back = self.session.post(url, data=data)
         res = json.loads(web_response_back.text)['rows'][0]['ID']
         return res
 
-    def del_requirement(self, id, is_zhanwei):
+    def del_item(self, id, code):
         data = {
             'id': id
         }
-        if is_zhanwei:
+        if code == 1:
             url = self.back_del_zhanwei_requirement_url
-        else:
+        elif code == 2:
             url = self.back_del_zhanzhuang_requirement_url
-        web_response = requests.post(url, headers=self.headers, data=data)
+        elif code == 3:
+            url = self.back_del_zhanhui_url
+        # web_response = requests.post(url, headers=self.headers, data=data)
+        web_response = self.session.post(url, data=data)
         res = json.loads(web_response.text)['success']
         assert res == True
