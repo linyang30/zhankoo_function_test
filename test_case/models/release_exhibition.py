@@ -14,6 +14,9 @@ class ReleaseExhibition:
     exhibition_pic_save_url = 'http://exh.zhankoo.com/Exhibition/Organizer/PictureSave'
     meeting_pic_upload_url = 'http://exh.zhankoo.com/Exhibition/Organizer/MeetingPictureSave'
     meeting_save_url = 'http://exh.zhankoo.com/Exhibition/Organizer/MeetingSave'
+    contact_save_url = 'http://exh.zhankoo.com/Exhibition/Organizer/ContactSave'
+    data_save_url = 'http://exh.zhankoo.com/Exhibition/Organizer/DataSave'
+    exhibitor_save_url = 'http://exh.zhankoo.com/Exhibition/Organizer/ExhibitorSave'
 
     header = {
         'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
@@ -141,6 +144,67 @@ class ReleaseExhibition:
         }
         web_response = self.session.post(self.meeting_save_url, data=data)
         assert json.loads(web_response.text)['success']
+
+    def contact_save(self, id, param):
+        data = {
+            'ID': id,
+            'Contact': param['contact'],
+            'Telephone': param['telephone'],
+            'Mobile': param['mobile'],
+            'Fax': param['fax'],
+            'QQ': param['qq'],
+            'Email': param['email'],
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+        web_response = self.session.post(self.contact_save_url, data=data)
+        assert json.loads(web_response.text)['success']
+
+    def data_save(self, id, param):
+        audiences_data = [{"Id":"0","Statue":"new","Type":param['text_field1'],"Percent":param['text_field2']},
+                          {"Id":"0","Statue":"new","Type":param['text_field3'],"Percent":param['text_field4']}]
+        exhibition_data = [{"Id":"0","Statue":"new","Type":param['text_field5'],"Percent":param['text_field6']},
+                           {"Id":"0","Statue":"new","Type":param['text_field7'],"Percent":param['text_field8']}]
+        data = {
+            'ExhibitionID': id,
+            'Area': param['area'],
+            'NetArea': param['net_area'],
+            'HistoryNum': param['history_num'],
+            'ViewerQuantity': param['viewer_quantity'],
+            'id': 0,
+            'statue': 'new',
+            'textfield3': param['text_field1'],
+            'textfield6': param['text_field2'],
+            'AudiencesData':str(audiences_data),
+            'id': 0,
+            'statue': 'new',
+            'textfield3': param['text_field3'],
+            'textfield6': param['text_field4'],
+            'ExhibitorQuantity': param['exhibition_quantity'],
+            'id': 0,
+            'statue': 'new',
+            'textfield3': param['text_field5'],
+            'textfield6': param['text_field6'],
+            'id': 0,
+            'statue': 'new',
+            'textfield3': param['text_field7'],
+            'textfield6': param['text_field8'],
+            'ExhibitorsData': str(exhibition_data),
+            'ViewerSatisfy': param['viewer_satisfy'],
+            'ExhibitorSatisfy': param['exhibition_satisfy'],
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+        web_response = self.session.post(self.data_save_url, data=data)
+        assert json.loads(web_response.text)['success']
+
+    def exhibitor_save(self, id, exhibitor_list):
+        data = {
+            'ID': id,
+            'ExhibitorList': exhibitor_list,
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+        web_response = self.session.post(self.exhibitor_save_url, data=data)
+        assert json.loads(web_response.text)['success']
+
 
 if __name__ == '__main__':
     print(ReleaseExhibition().pic_upload('zhanhui.jpg'))

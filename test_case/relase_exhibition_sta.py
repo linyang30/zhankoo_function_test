@@ -48,5 +48,37 @@ class ReleaseExhibtionTest(unittest.TestCase):
         }
         release_exhibition.meeting_save(id, param)
 
+        contact_save_info = {
+            'contact': '林洋',
+            'telephone': '0755-87654321',
+            'mobile': '18126127906',
+            'fax': '0755-12345678',
+            'qq': '123456',
+            'email': 'zhankoo@zhankoo.com'
+        }
+        release_exhibition.contact_save(id, contact_save_info)
+
+        data_save_info = {
+            'area': '1000',
+            'net_area': '900',
+            'history_num': '10',
+            'viewer_quantity': '10000',
+            'text_field1': '本地',
+            'text_field2': '60',
+            'text_field3': '外地',
+            'text_field4': '40',
+            'exhibition_quantity': '1000',
+            'text_field5': '国内',
+            'text_field6': '80',
+            'text_field7': '国外',
+            'text_field8': '20',
+            'viewer_satisfy': '98',
+            'exhibition_satisfy': '80',
+        }
+        release_exhibition.data_save(id, data_save_info)
+
+        exbihitor_list = '展商1,展商2,展商3,展商4,展商5'
+        release_exhibition.exhibitor_save(id, exbihitor_list)
+
 
         # self.back.del_item(id, 3)

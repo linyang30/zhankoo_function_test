@@ -28,7 +28,7 @@ class DataTest(unittest.TestCase):
         targets = soup.select('div.searchlist > ul > li > a')
         for target in targets:
             self.zhanhui_links.append('http:' + target.get('href'))
-        assert len(self.zhanhui_links) > 600
+        assert len(self.zhanhui_links) > 500
         open_links(self.zhanhui_links, self.zhanhui_links_error)
 
 
