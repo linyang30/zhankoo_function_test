@@ -1,7 +1,7 @@
 from models.get_session import get_front_session
 import os
 import json
-import requests
+from requests_toolbelt.multipart.encoder import MultipartEncoder
 
 class ReleaseXiaoguotu:
 
@@ -12,10 +12,20 @@ class ReleaseXiaoguotu:
         current = os.getcwd()
         base = current.split('\\test_case')[0]
         target = base + '\\data\\' + filename
-        files = {'file': open(target, 'rb')}
-        web_response = self.session.post(self.pic_save_url, files=files)
-        print(web_response.text)
-        result = json.loads(web_response.text.split('OnCompleteUpload')[1].split('catch(e)')[0][2:-4])
+        multipart_data = MultipartEncoder(
+            fields={
+                'image': (filename, open(target, 'rb'), 'image/jpeg'),
+                'Width': '460',
+                'Height': '280',
+            }
+        )
+
+        header = {
+            'Content-Type': multipart_data.content_type
+        }
+
+        web_response = self.session.post(self.pic_save_url, data=multipart_data, headers=header)
+        result = json.loads(web_response.text.split('zhankoo.com')[1].split('catch(e)')[0][5:-4])
         assert result['success'] == True
         return result['pictureUrl']
 
