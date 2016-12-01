@@ -7,6 +7,7 @@ class ReleaseXiaoguotu:
 
     session = get_front_session('exService@zhankoo.com', '123456')
     pic_save_url = 'http://exh.zhankoo.com/Home/PictureSave'
+    decorate_case_save_url = 'http://exh.zhankoo.com/Decorate/Decorator/DecorateCaseSave'
 
     def pic_upload(self, filename):
         current = os.getcwd()
@@ -30,10 +31,27 @@ class ReleaseXiaoguotu:
         return result['pictureUrl']
 
 
-    def release_xiaoguotu(self):
+    def release_xiaoguotu(self, imgs, param):
         data = {
-
+            'ID': '',
+            'Title': param['title'],
+            'Description': param['description'],
+            'IndustryName': param['industry_name'],
+            'IndustryID': param['industry_id'],
+            'Area': param['area'],
+            'BoothStandardType': param['standard_type'],
+            'Material': param['material'],
+            'Style': param['type'],
+            'DesignerID': 1220,
+            'Price': param['price'],
+            'Order': param['order'],
+            'colorAddId': param['color'],
+            'Color': param['color'],
+            'DecorateCaseImage': imgs,
+            'X-Requested-With': 'XMLHttpRequest'
         }
+        web_response = self.session.post(self.decorate_case_save_url, data=data)
+        assert json.loads(web_response.text)['success']
 
 
 if __name__ == '__main__':
