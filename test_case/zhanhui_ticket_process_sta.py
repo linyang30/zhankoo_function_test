@@ -9,6 +9,7 @@ class ZhanhuiTicketTest(unittest.TestCase):
         self.back = Back()
 
     def test_get_ticket_success(self):
+        '''测试索票成功'''
         canzhanshang_get_ticket()
         apply_id = get_ticket_apply_id()
         confirm_ticket_pass(apply_id, '通过')
@@ -17,6 +18,7 @@ class ZhanhuiTicketTest(unittest.TestCase):
         self.back.del_item(apply_id, 5)
 
     def test_get_ticket_failed(self):
+        '''测试索票失败'''
         canzhanshang_get_ticket()
         apply_id = get_ticket_apply_id()
         confirm_ticket_unpass(apply_id, '不通过')

@@ -1,4 +1,4 @@
-from models.zhanzhuang_ordering_process import submit_zhanzhuang_requirement,get_lastest_zhanzhuang_require_id,order_save,offine_order_confirm_payment,order_prepare,order_building,supervisor_report_pic_upload,supervisor_report_save,confirm_accept
+from models.zhanzhuang_ordering_process import *
 from models.back import Back
 import unittest
 import random
