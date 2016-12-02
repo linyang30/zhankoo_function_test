@@ -18,6 +18,9 @@ class ReleaseXiaoguotu:
                 'image': (filename, open(target, 'rb'), 'image/jpeg'),
                 'Width': '460',
                 'Height': '280',
+                'Index': '3',
+                'Prefix': 'EnterpriseStyle',
+                'CallBack': 'parent.OnComplete'
             }
         )
 
@@ -26,7 +29,8 @@ class ReleaseXiaoguotu:
         }
 
         web_response = self.session.post(self.pic_save_url, data=multipart_data, headers=header)
-        result = json.loads(web_response.text.split('zhankoo.com')[1].split('catch(e)')[0][5:-4])
+        # print(web_response.text)
+        result = json.loads(web_response.text.split('OnComplete')[1].split('catch(e)')[0][2:-4])
         assert result['success'] == True
         return result['pictureUrl']
 
