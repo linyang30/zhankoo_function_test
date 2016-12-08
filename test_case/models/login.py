@@ -13,7 +13,7 @@ class Login:
         token = soup.find('input', attrs={'name': '__RequestVerificationToken'}).get('value')
         return token
 
-    def send_login_request(self, name, password):
+    def send_login_request(self, name = '', password = ''):
         token = self.get_login_token()
         data = {
             '__RequestVerificationToken': token,
@@ -27,4 +27,16 @@ class Login:
         web_response = requests.post(self.login_url, data=data)
         soup = BeautifulSoup(web_response.text, 'lxml')
         result = soup.select('body > p')[0].get_text()
-        return json.loads(result)['success']
+        return json.loads(result)
+
+    def get_login_error_message(self, name = '', password = ''):
+        result_json = self.send_login_request(name, password)
+        result_list = []
+        for result in result_json:
+            errors = result['Value']['Errors']
+            if errors:
+                result_list.append(errors[0]['ErrorMessage'])
+        return result_list
+
+if __name__ == '__main__':
+    print(Login().send_login_request('13500000018', '123456'))
