@@ -38,7 +38,7 @@ class LoginTest(unittest.TestCase):
     def test_login_character(self):
         '''测试各种用户角色登陆'''
         user_list = excel_table_by_index()
-        for user in user_list:
+        for user in user_list[1:]:
             try:
                 username = int(user[0])
             except:

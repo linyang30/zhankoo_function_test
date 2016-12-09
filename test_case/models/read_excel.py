@@ -12,6 +12,11 @@ def open_excel(file):
     return data
 
 def excel_table_by_index(file = get_default_file_path(), by_index = 0):
+    '''
+    by_index = 0 用户登录测试数据
+    by_index = 1 参展宝展会测试数据
+    by_index = 2 参展宝展装测试数据
+    '''
     data = open_excel(file)
     table = data.sheets()[by_index]
     nrows = table.nrows
